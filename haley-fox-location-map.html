@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haley Fox — Missouri Reference Map</title>
+<style>
+  :root{
+    --paper:#E8EBE2; --land:#DCE3D2; --land-edge:#B9C7AB;
+    --ink:#243024; --ink-soft:#4F5C4E; --ink-faint:#8A9686;
+    --graticule:#C9D2BD; --panel:#F3F5EE; --panel-edge:#D3DBC7;
+    --c-home:#C77A1E; --c-ew:#2E8B8B; --c-dr:#B0453C;
+    --shadow:rgba(36,48,36,.12);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#10150F; --land:#1D2A1D; --land-edge:#33472F;
+      --ink:#E7ECE0; --ink-soft:#AEBBA9; --ink-faint:#6E7C6B;
+      --graticule:#26331F; --panel:#161D14; --panel-edge:#2A3626;
+      --c-home:#E7A64A; --c-ew:#5FBFBF; --c-dr:#E37E70;
+      --shadow:rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#10150F; --land:#1D2A1D; --land-edge:#33472F;
+    --ink:#E7ECE0; --ink-soft:#AEBBA9; --ink-faint:#6E7C6B;
+    --graticule:#26331F; --panel:#161D14; --panel-edge:#2A3626;
+    --c-home:#E7A64A; --c-ew:#5FBFBF; --c-dr:#E37E70;
+    --shadow:rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:clamp(20px,4vw,52px)}
+  header{margin-bottom:26px; max-width:60ch}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ink-faint); margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--serif); font-weight:600;
+    font-size:clamp(28px,4.4vw,44px); line-height:1.05;
+    letter-spacing:-.01em; margin:0 0 12px; text-wrap:balance;
+  }
+  h1 em{font-style:italic; color:var(--c-home)}
+  .lede{margin:0; color:var(--ink-soft); font-size:clamp(15px,1.7vw,17px); max-width:56ch}
+  .layout{display:grid; grid-template-columns:1.55fr 1fr; gap:28px; align-items:start}
+  @media (max-width:860px){.layout{grid-template-columns:1fr}}
+  .mapcard{
+    background:var(--panel); border:1px solid var(--panel-edge);
+    border-radius:14px; padding:14px; box-shadow:0 10px 30px -18px var(--shadow);
+  }
+  .mapcard svg{display:block; width:100%; height:auto}
+  .mapfoot{
+    display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:11px; letter-spacing:.04em;
+    color:var(--ink-faint); padding:8px 6px 2px;
+  }
+  aside{display:flex; flex-direction:column; gap:20px}
+  .card{
+    background:var(--panel); border:1px solid var(--panel-edge);
+    border-radius:14px; padding:20px 20px 22px; box-shadow:0 10px 30px -20px var(--shadow);
+  }
+  .card h2{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-faint);
+    margin:0 0 16px; font-weight:600;
+  }
+  .pt{display:flex; gap:13px; padding:13px 0; border-top:1px solid var(--panel-edge)}
+  .pt:first-of-type{border-top:none; padding-top:0}
+  .swatch{
+    flex:none; width:16px; height:16px; border-radius:50%; margin-top:3px;
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--dot) 22%, transparent);
+  }
+  .pt-body{min-width:0}
+  .pt-name{font-family:var(--serif); font-size:18px; font-weight:600; line-height:1.15}
+  .pt-place{font-size:13.5px; color:var(--ink-soft); margin-top:1px}
+  .pt-meta{font-family:var(--mono); font-size:11.5px; color:var(--ink-faint); margin-top:5px; letter-spacing:.02em}
+  .dist{display:flex; flex-direction:column; gap:0}
+  .drow{display:flex; align-items:baseline; gap:12px; padding:14px 0; border-top:1px solid var(--panel-edge)}
+  .drow:first-child{border-top:none; padding-top:2px}
+  .drow .route{flex:1; min-width:0}
+  .route .to{font-family:var(--serif); font-size:17px; font-weight:600}
+  .route .via{font-size:12.5px; color:var(--ink-soft); margin-top:2px}
+  .num{font-family:var(--mono); text-align:right; font-variant-numeric:tabular-nums}
+  .num .big{font-size:21px; font-weight:600; letter-spacing:-.01em}
+  .num .unit{font-size:11px; color:var(--ink-faint); letter-spacing:.05em}
+  .num .drive{font-size:11.5px; color:var(--ink-soft); margin-top:3px; letter-spacing:.02em}
+  .note{
+    font-size:12.5px; color:var(--ink-soft); line-height:1.55;
+    border-left:2px solid var(--c-home); padding:2px 0 2px 13px; margin-top:2px;
+  }
+  a{color:inherit}
+  .srcs{margin-top:26px; font-size:12px; color:var(--ink-faint); line-height:1.7}
+  .srcs a{text-decoration:underline; text-underline-offset:2px}
+  /* SVG label typography */
+  .mlabel{font-family:var(--sans); font-weight:600; font-size:13px; fill:var(--ink)}
+  .mplace{font-family:var(--mono); font-size:10px; letter-spacing:.03em}
+  .reflabel{font-family:var(--sans); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; fill:var(--ink-faint)}
+  .gridlabel{font-family:var(--mono); font-size:8.5px; fill:var(--ink-faint)}
+  .distlabel{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Contact Reference · Missouri Ozarks</p>
+    <h1>Haley Fox lives in <em>Forsyth, Missouri</em></h1>
+    <p class="lede">Forsyth sits deep in the southern Ozarks. Plotted below against two of the region's
+      intentional communities — East Wind, an easy hop east, and Dancing Rabbit, a long haul up to the
+      state's far northeast corner.</p>
+  </header>
+
+  <div class="layout">
+    <div class="mapcard">
+      <div id="map"></div>
+      <div class="mapfoot">
+        <span>Missouri · state silhouette</span>
+        <span>Points at true lat/long · straight-line distances</span>
+      </div>
+    </div>
+
+    <aside>
+      <div class="card">
+        <h2>The three reference points</h2>
+        <div class="pt">
+          <span class="swatch" style="--dot:var(--c-home); background:var(--c-home)"></span>
+          <div class="pt-body">
+            <div class="pt-name">Haley Fox</div>
+            <div class="pt-place">Forsyth, MO 65653 · Taney County</div>
+            <div class="pt-meta">36.685° N · 93.114° W</div>
+          </div>
+        </div>
+        <div class="pt">
+          <span class="swatch" style="--dot:var(--c-ew); background:var(--c-ew)"></span>
+          <div class="pt-body">
+            <div class="pt-name">East Wind Community</div>
+            <div class="pt-place">Tecumseh, MO 65760 · Ozark County</div>
+            <div class="pt-meta">36.590° N · 92.257° W</div>
+          </div>
+        </div>
+        <div class="pt">
+          <span class="swatch" style="--dot:var(--c-dr); background:var(--c-dr)"></span>
+          <div class="pt-body">
+            <div class="pt-name">Dancing Rabbit Ecovillage</div>
+            <div class="pt-place">Rutledge, MO 63563 · Scotland County</div>
+            <div class="pt-meta">40.187° N · 92.030° W</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Distance from Forsyth</h2>
+        <div class="dist">
+          <div class="drow">
+            <div class="route">
+              <div class="to" style="color:var(--c-ew)">East Wind</div>
+              <div class="via">Forsyth → Tecumseh, via US-160 E</div>
+            </div>
+            <div class="num">
+              <div><span class="big">48</span> <span class="unit">mi</span></div>
+              <div class="drive">≈ 60 mi / 1 hr 20 min drive</div>
+            </div>
+          </div>
+          <div class="drow">
+            <div class="route">
+              <div class="to" style="color:var(--c-dr)">Dancing Rabbit</div>
+              <div class="via">Forsyth → Rutledge, cross-state NE</div>
+            </div>
+            <div class="num">
+              <div><span class="big">249</span> <span class="unit">mi</span></div>
+              <div class="drive">≈ 300 mi / ~5 hr drive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note">Source: your Notion CRM lists Haley's address as 477 Chisholm Trail, Forsyth,
+        MO 65653. One record's “Location” field reads “Forsyth, GA” — that's a stray typo; the ZIP,
+        mailing address, and “Lives In: Forsyth” all confirm Missouri.</p>
+    </aside>
+  </div>
+
+  <p class="srcs">
+    Community locations verified via
+    <a href="https://en.wikipedia.org/wiki/East_Wind_Community">East Wind Community</a> ·
+    <a href="https://www.thefec.org/communities/east-wind/">Federation of Egalitarian Communities</a> ·
+    <a href="https://en.wikipedia.org/wiki/Dancing_Rabbit_Ecovillage">Dancing Rabbit Ecovillage</a> ·
+    <a href="https://www.dancingrabbit.org/contact-dancing-rabbit/">dancingrabbit.org</a>.
+    Distances are great-circle (as-the-crow-flies); drive estimates are approximate.
+  </p>
+</div>
+
+<script>
+(function(){
+  // --- Missouri state outline (lon,lat), clockwise from NW corner ---
+  const OUTLINE = [
+    [-95.77,40.58],[-91.73,40.61],            // Iowa border (north)
+    [-91.50,40.25],[-91.42,39.90],[-90.93,39.40],[-90.70,39.22],
+    [-90.20,38.87],[-90.18,38.63],[-90.26,38.36],[-90.37,38.15],
+    [-89.93,37.60],[-89.52,37.25],[-89.51,36.95],[-89.62,36.62],  // Mississippi (east)
+    [-89.73,36.28],[-89.68,36.00],[-90.15,36.00],[-90.15,36.50],  // Bootheel
+    [-94.62,36.50],                                               // Arkansas (south)
+    [-94.62,37.30],[-94.62,38.30],[-94.62,39.10],                 // Kansas (west)
+    [-94.83,39.20],[-95.05,39.55],[-95.30,40.00],[-95.58,40.38],[-95.77,40.58] // Missouri R (NW)
+  ];
+  const POINTS = [
+    {name:'Haley Fox',       place:'Forsyth',        lon:-93.1141, lat:36.6851, color:'--c-home', lx:-10, ly:16,  anchor:'end'},
+    {name:'East Wind',       place:'Tecumseh',       lon:-92.2572, lat:36.5904, color:'--c-ew',   lx:12,  ly:16,  anchor:'start'},
+    {name:'Dancing Rabbit',  place:'Rutledge',       lon:-92.030,  lat:40.187,  color:'--c-dr',   lx:12,  ly:5,   anchor:'start'}
+  ];
+  const LINES = [
+    {a:0,b:1,label:'48 mi',off:[0,-14]},
+    {a:0,b:2,label:'249 mi',off:[16,0]}
+  ];
+  const REFS = [
+    {name:'Springfield', lon:-93.30, lat:37.21, dx:-6, dy:-8, anchor:'end'},
+    {name:'Kansas City', lon:-94.58, lat:39.10, dx:8,  dy:-6, anchor:'start'},
+    {name:'St. Louis',   lon:-90.20, lat:38.63, dx:8,  dy:-6, anchor:'start'}
+  ];
+
+  // --- projection (equirectangular, longitude compressed by cos(latMid)) ---
+  const lonMin=-96.0, lonMax=-89.2, latMin=35.8, latMax=40.75;
+  const latMid=(latMin+latMax)/2 * Math.PI/180;
+  const K=94, kx=K*Math.cos(latMid), ky=K, M=42;
+  function P(lon,lat){ return [ M + (lon-lonMin)*kx, M + (latMax-lat)*ky ]; }
+  const W = M*2 + (lonMax-lonMin)*kx;
+  const H = M*2 + (latMax-latMin)*ky;
+
+  const NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox',`0 0 ${W.toFixed(1)} ${H.toFixed(1)}`);
+  svg.setAttribute('role','img');
+  svg.setAttribute('aria-label','Map of Missouri showing Forsyth, East Wind near Tecumseh, and Dancing Rabbit near Rutledge.');
+  const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const cs=getComputedStyle(document.documentElement);
+  const C=n=>cs.getPropertyValue(n).trim();
+
+  // graticule (faint lat/long lines)
+  const g=mk('g',{});
+  for(let lon=-95;lon<=-90;lon++){
+    const p1=P(lon,latMin), p2=P(lon,latMax);
+    g.appendChild(mk('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:C('--graticule'),'stroke-width':1}));
+    const lb=mk('text',{x:p2[0],y:M-8,'text-anchor':'middle','class':'gridlabel'}); lb.textContent=Math.abs(lon)+'°W'; g.appendChild(lb);
+  }
+  for(let lat=36;lat<=40;lat++){
+    const p1=P(lonMin,lat), p2=P(lonMax,lat);
+    g.appendChild(mk('line',{x1:p1[0],y1:p1[1],x2:p2[0],y2:p2[1],stroke:C('--graticule'),'stroke-width':1}));
+    const lb=mk('text',{x:M-8,y:p1[1]+3,'text-anchor':'end','class':'gridlabel'}); lb.textContent=lat+'°N'; g.appendChild(lb);
+  }
+  svg.appendChild(g);
+
+  // state polygon
+  const pts=OUTLINE.map(c=>P(c[0],c[1]).map(v=>v.toFixed(1)).join(',')).join(' ');
+  svg.appendChild(mk('polygon',{points:pts,fill:C('--land'),stroke:C('--land-edge'),'stroke-width':2,'stroke-linejoin':'round'}));
+
+  // reference cities (faint)
+  REFS.forEach(r=>{
+    const p=P(r.lon,r.lat);
+    svg.appendChild(mk('circle',{cx:p[0],cy:p[1],r:2.6,fill:C('--ink-faint')}));
+    const t=mk('text',{x:p[0]+r.dx,y:p[1]+r.dy,'text-anchor':r.anchor,'class':'reflabel'}); t.textContent=r.name; svg.appendChild(t);
+  });
+
+  // connecting distance lines
+  LINES.forEach(l=>{
+    const pa=P(POINTS[l.a].lon,POINTS[l.a].lat), pb=P(POINTS[l.b].lon,POINTS[l.b].lat);
+    svg.appendChild(mk('line',{x1:pa[0],y1:pa[1],x2:pb[0],y2:pb[1],stroke:C('--ink-soft'),'stroke-width':1.5,'stroke-dasharray':'2 5','stroke-linecap':'round',opacity:.75}));
+    const mx=(pa[0]+pb[0])/2+l.off[0], my=(pa[1]+pb[1])/2+l.off[1];
+    const w=l.label.length*7.2+14;
+    svg.appendChild(mk('rect',{x:mx-w/2,y:my-9,width:w,height:16,rx:8,fill:C('--panel'),stroke:C('--panel-edge'),'stroke-width':1}));
+    const t=mk('text',{x:mx,y:my+2.5,'text-anchor':'middle','class':'distlabel',fill:C('--ink')}); t.textContent=l.label; svg.appendChild(t);
+  });
+
+  // primary points
+  POINTS.forEach(pt=>{
+    const p=P(pt.lon,pt.lat), col=C(pt.color);
+    svg.appendChild(mk('circle',{cx:p[0],cy:p[1],r:12,fill:col,opacity:.16}));
+    svg.appendChild(mk('circle',{cx:p[0],cy:p[1],r:6,fill:col,stroke:C('--paper'),'stroke-width':2}));
+    const t=mk('text',{x:p[0]+pt.lx,y:p[1]+pt.ly,'text-anchor':pt.anchor,'class':'mlabel'}); t.textContent=pt.name; svg.appendChild(t);
+    const s=mk('text',{x:p[0]+pt.lx,y:p[1]+pt.ly+13,'text-anchor':pt.anchor,'class':'mplace',fill:col}); s.textContent=pt.place; svg.appendChild(s);
+  });
+
+  document.getElementById('map').appendChild(svg);
+})();
+</script>
+</body>
+</html>
