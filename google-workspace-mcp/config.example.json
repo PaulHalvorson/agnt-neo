@@ -1,0 +1,30 @@
+{
+  "//": "Copy this file to your config directory as config.json and fill it in. See README.md for where that directory is and how to get the OAuth client id/secret.",
+
+  "defaultWorkspace": "arcretreat",
+
+  "oauth": {
+    "//": "One Google 'Desktop app' OAuth client, shared by all workspaces below. Each account authorizes it separately via `npm run authorize`. A workspace may override this with its own `oauth` block (see triadsynergy example).",
+    "clientId": "YOUR_CLIENT_ID.apps.googleusercontent.com",
+    "clientSecret": "YOUR_CLIENT_SECRET"
+  },
+
+  "scopes": [
+    "https://www.googleapis.com/auth/drive"
+  ],
+
+  "workspaces": {
+    "triadsynergy": {
+      "label": "Triad Synergy",
+      "email": "drpaul@triadsynergy.com"
+    },
+    "arclegacyfund": {
+      "label": "ARC Legacy Fund",
+      "email": "contact@arclegacyfund.org"
+    },
+    "arcretreat": {
+      "label": "ARC Retreat",
+      "email": "retreat@arcretreat.org"
+    }
+  }
+}

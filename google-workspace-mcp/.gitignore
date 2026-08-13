@@ -1,0 +1,8 @@
+node_modules/
+# Never commit real credentials or tokens
+config.json
+config.local.json
+tokens.json
+*.pem
+.env
+.env.*
