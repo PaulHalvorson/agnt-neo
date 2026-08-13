@@ -9,8 +9,12 @@
     "clientSecret": "YOUR_CLIENT_SECRET"
   },
 
+  "//scopes": "Drive + Gmail (read/send) + Calendar. Trim this list to only what you need, then re-run `npm run authorize` for each account so the new consent takes effect.",
   "scopes": [
-    "https://www.googleapis.com/auth/drive"
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/gmail.readonly",
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/calendar"
   ],
 
   "workspaces": {

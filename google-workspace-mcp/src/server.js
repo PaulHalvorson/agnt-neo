@@ -4,6 +4,8 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ListToolsRequestSchema, CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { loadConfig, loadTokens, resolveWorkspace } from './config.js';
 import * as drive from './drive.js';
+import * as gmail from './gmail.js';
+import * as calendar from './calendar.js';
 
 const config = loadConfig();
 
@@ -135,6 +137,98 @@ const tools = [
       additionalProperties: false,
     },
   },
+
+  {
+    name: 'gmail_search',
+    description: 'Search Gmail for a workspace account using Gmail search syntax (e.g. "from:jane subject:invoice newer_than:7d"). Returns matching messages with sender, subject, date, and snippet.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        workspace: workspaceProp,
+        query: { type: 'string', description: 'Gmail search query, e.g. "from:board@ newer_than:30d".' },
+        q: { type: 'string', description: 'Alias for query (raw Gmail search string).' },
+        maxResults: { type: 'number', description: 'Max messages (default 20, max 100).' },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: 'gmail_read_message',
+    description: 'Read a single Gmail message (headers + plain-text body) for a workspace account.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        workspace: workspaceProp,
+        messageId: { type: 'string', description: 'The Gmail message id (from gmail_search).' },
+        maxBytes: { type: 'number', description: 'Max characters of body to return (default 204800).' },
+      },
+      required: ['messageId'],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: 'gmail_send_message',
+    description: 'Send a plain-text email FROM a workspace account. Sends immediately — confirm recipient and content with the user before calling.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        workspace: workspaceProp,
+        to: { type: 'string', description: 'Recipient(s), comma-separated.' },
+        subject: { type: 'string', description: 'Subject line.' },
+        body: { type: 'string', description: 'Plain-text body.' },
+        cc: { type: 'string', description: 'CC recipient(s), comma-separated. Optional.' },
+        bcc: { type: 'string', description: 'BCC recipient(s), comma-separated. Optional.' },
+      },
+      required: ['to', 'subject', 'body'],
+      additionalProperties: false,
+    },
+  },
+
+  {
+    name: 'calendar_list_calendars',
+    description: 'List the calendars available to a workspace account (id, name, access role).',
+    inputSchema: {
+      type: 'object',
+      properties: { workspace: workspaceProp },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: 'calendar_list_events',
+    description: 'List/search calendar events for a workspace account within an optional time window.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        workspace: workspaceProp,
+        calendarId: { type: 'string', description: 'Calendar id (default "primary").' },
+        timeMin: { type: 'string', description: 'ISO start of window, e.g. "2026-08-01T00:00:00Z". Optional.' },
+        timeMax: { type: 'string', description: 'ISO end of window. Optional.' },
+        q: { type: 'string', description: 'Free-text search over events. Optional.' },
+        maxResults: { type: 'number', description: 'Max events (default 25, max 250).' },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: 'calendar_create_event',
+    description: 'Create a calendar event on a workspace account. Use "YYYY-MM-DD" for all-day, or an ISO dateTime for timed events. Creates immediately — confirm details with the user before calling.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        workspace: workspaceProp,
+        calendarId: { type: 'string', description: 'Calendar id (default "primary").' },
+        summary: { type: 'string', description: 'Event title.' },
+        description: { type: 'string', description: 'Event description. Optional.' },
+        location: { type: 'string', description: 'Event location. Optional.' },
+        start: { type: 'string', description: '"YYYY-MM-DD" (all-day) or ISO dateTime, e.g. "2026-08-20T14:00:00".' },
+        end: { type: 'string', description: '"YYYY-MM-DD" (all-day) or ISO dateTime.' },
+        timeZone: { type: 'string', description: 'IANA time zone for timed events, e.g. "America/Chicago". Optional.' },
+        attendees: { type: 'array', items: { type: 'string' }, description: 'Attendee email addresses. Optional.' },
+      },
+      required: ['summary', 'start', 'end'],
+      additionalProperties: false,
+    },
+  },
 ];
 
 async function dispatch(name, args) {
@@ -161,6 +255,12 @@ async function dispatch(name, args) {
     case 'drive_upload_file': return ok(await drive.uploadFile(config, key, args));
     case 'drive_create_folder': return ok(await drive.createFolder(config, key, args));
     case 'drive_download_file': return ok(await drive.downloadFile(config, key, args));
+    case 'gmail_search': return ok(await gmail.searchMessages(config, key, args));
+    case 'gmail_read_message': return ok(await gmail.readMessage(config, key, args));
+    case 'gmail_send_message': return ok(await gmail.sendMessage(config, key, args));
+    case 'calendar_list_calendars': return ok(await calendar.listCalendars(config, key, args));
+    case 'calendar_list_events': return ok(await calendar.listEvents(config, key, args));
+    case 'calendar_create_event': return ok(await calendar.createEvent(config, key, args));
     default: throw new Error(`Unknown tool: ${name}`);
   }
 }

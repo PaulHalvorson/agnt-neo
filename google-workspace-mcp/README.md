@@ -23,6 +23,7 @@ tools target that account's Drive. No account switching in settings.
 
 Tools exposed to Claude (every tool takes an optional `workspace` argument):
 
+**Drive**
 - `list_workspaces` — show the three workspaces and which are signed in
 - `drive_search` — search by name / full text
 - `drive_list_folder` — list a folder's contents (`root` = top of My Drive)
@@ -31,6 +32,20 @@ Tools exposed to Claude (every tool takes an optional `workspace` argument):
 - `drive_upload_file` — upload a local file **or** inline text
 - `drive_create_folder` — make a folder
 - `drive_download_file` — save a Drive file to a local path
+
+**Gmail**
+- `gmail_search` — search with Gmail syntax (`from:`, `newer_than:7d`, …)
+- `gmail_read_message` — read one message (headers + plain-text body)
+- `gmail_send_message` — send a plain-text email from that account
+
+**Calendar**
+- `calendar_list_calendars` — list the account's calendars
+- `calendar_list_events` — list/search events in a time window
+- `calendar_create_event` — create a timed or all-day event
+
+> Gmail and Calendar require their scopes in `config.json` (already in
+> `config.example.json`) — if you started Drive-only, add them and re-run
+> `npm run authorize` for each account.
 
 ---
 
