@@ -291,9 +291,9 @@ gifts.forEach((g, i) => {
     { text: g[1], options: { fontSize: 11.5, color: WHITE } },
   ], { x: x + 0.2, y: 1.66, w: 2.45, h: 1.5, fontFace: F, lineSpacingMultiple: 1.12 });
 });
-// QR placeholder
+// QR — live MailerLite form (TRIAD account), regenerate via: python3 -c "import qrcode; ..." → form_qr.png
 s.addShape("roundRect", { x: 7.0, y: 1.45, w: 2.3, h: 1.9, rectRadius: 0.09, fill: { color: WHITE }, line: { type: "none" } });
-s.addText("QR\n(form link —\nalso in chat)", { x: 7.0, y: 1.45, w: 2.3, h: 1.9, align: "center", valign: "middle", fontFace: F, fontSize: 12, bold: true, color: NAVY });
+s.addImage({ path: __dirname + "/form_qr.png", x: 7.17, y: 1.5, w: 1.8, h: 1.8 });
 s.addText([
   { text: "LinkedIn or email — whichever you prefer. ", options: { fontSize: 15, bold: true, color: WHITE } },
   { text: "The kit arrives within the hour.", options: { fontSize: 15, color: "B9C6CE" } },

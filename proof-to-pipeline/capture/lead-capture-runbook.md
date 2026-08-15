@@ -3,6 +3,24 @@
 Flow: **MailerLite form → "EAIO Gift Kit" group → kit email → Airtable Targets row →
 scheduler bookings tracked in Touch Log.**
 
+## 0. LIVE ASSETS (created 2026-08-15 in the TRIAD account, acct 2493801)
+
+| Asset | ID / URL |
+|---|---|
+| Group `EAIO Gift Kit — 2026-08-21` | `195866738980554546` |
+| Custom field `LinkedIn URL` | `1428749` (key `linkedin_url`) |
+| Form `EAIO Gift Kit — talk capture` (embedded) | `195866746620478475` |
+| **Hosted form / QR target** | https://preview.mailerlite.io/forms/2493801/195866746620478475/share |
+
+QR (navy-on-white, in both decks): `../deck/form_qr.png`.
+Still needed in the dashboard (form builder, ~5 min): add the LinkedIn URL field,
+optional Location/Phone, headline + consent copy from §1 below. The share URL and
+QR stay valid — content edits don't change the slug.
+**Deliverability (Monday):** account signed up under paulphalvorson@gmail.com —
+set the sender to DrPaul@TriadSynergy.com and authenticate the triadsynergy.com
+domain (MailerLite → Settings → Domains) BEFORE any kit email goes out; mail
+"from" a gmail.com address via MailerLite will fail DMARC.
+
 ## 1. MailerLite (Monday)
 
 **Group:** `EAIO Gift Kit — 2026-08-21`
