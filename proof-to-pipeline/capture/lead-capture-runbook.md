@@ -3,37 +3,35 @@
 Flow: **MailerLite form → "EAIO Gift Kit" group → kit email → Airtable Targets row →
 scheduler bookings tracked in Touch Log.**
 
-## 0. LIVE ASSETS — ⚠️ WRONG ACCOUNT, REBUILD PENDING
+## 0. LIVE ASSETS — ✅ TRIAD ACCOUNT (rebuilt 2026-08-15, session 3)
 
-The assets below were created 2026-08-15 in acct 2493801 (paulphalvorson@gmail.com)
-— which turned out to be Paul's expired-trial LEARNING account, not TRIAD. The real
-TRIAD account is under drpaul@triadsynergy.com. Once the connector is re-authorized
-to that account: recreate all three assets there, regenerate `../deck/form_qr.png`
-from the new share URL, rebuild both decks. Do NOT use the QR/URLs below.
-
-**Auth re-check 2026-08-15 (session 3): still blocked.** The "MailerLite —
-TRIAD Synergy" connector still answers as paulphalvorson@gmail.com / acct 2493801
-(trial), and the plain "MailerLite" connector is ARC (contact@arclegacyfund.org).
-No create calls were made. Paul must re-authorize the TRIAD connector in claude.ai
-while logged into MailerLite as drpaul@triadsynergy.com (log out of the gmail
-account in the browser first — the OAuth screen reuses the live browser session,
-which is how the wrong-account build happened). Then re-run this §0 rebuild.
+All assets live in the real TRIAD account: **acct 2577317, drpaul@triadsynergy.com**.
+Auth was verified against that address before every create call. The earlier
+wrong-account build (trial acct 2493801, paulphalvorson@gmail.com) is abandoned;
+that account is scheduled for deletion. Connector fix that worked: the claude.ai
+custom connector caches OAuth grants per URL, so the rebuild connector uses
+`https://mcp.mailerlite.com/mcp?account=triadsynergy` (fresh query param → fresh
+OAuth prompt). ARC's connector (bare URL) remains untouched.
 
 | Asset | ID / URL |
 |---|---|
-| Group `EAIO Gift Kit — 2026-08-21` | `195866738980554546` |
-| Custom field `LinkedIn URL` | `1428749` (key `linkedin_url`) |
-| Form `EAIO Gift Kit — talk capture` (embedded) | `195866746620478475` |
-| **Hosted form / QR target** | https://preview.mailerlite.io/forms/2493801/195866746620478475/share |
+| Group `EAIO Gift Kit — 2026-08-21` | `195871454532732922` |
+| Custom field `LinkedIn URL` | `1428818` (key `linkedin_url`) |
+| Form `EAIO Gift Kit — talk capture` (embedded) | `195871469051316158` |
+| **Hosted form / QR target** | https://preview.mailerlite.io/forms/2577317/195871469051316158/share |
+| Form dashboard | https://dashboard.mailerlite.com/forms/195871469051316158/overview |
 
-QR (navy-on-white, in both decks): `../deck/form_qr.png`.
+QR (navy-on-white, in both decks): `../deck/form_qr.png` — regenerated from the
+new share URL and verified by decode; both decks rebuilt with it.
 Still needed in the dashboard (form builder, ~5 min): add the LinkedIn URL field,
 optional Location/Phone, headline + consent copy from §1 below. The share URL and
 QR stay valid — content edits don't change the slug.
-**Deliverability (Monday):** account signed up under paulphalvorson@gmail.com —
-set the sender to DrPaul@TriadSynergy.com and authenticate the triadsynergy.com
-domain (MailerLite → Settings → Domains) BEFORE any kit email goes out; mail
-"from" a gmail.com address via MailerLite will fail DMARC.
+**Double opt-in:** the form was created with double opt-in ON (MailerLite default).
+Decide Monday: keep (cleaner list, but a confirm step delays the kit email) or
+turn off for this form so the kit sends instantly on signup.
+**Deliverability (Monday):** authenticate the triadsynergy.com domain
+(MailerLite → Settings → Domains) and confirm sender DrPaul@TriadSynergy.com
+BEFORE any kit email goes out.
 
 ## 1. MailerLite (Monday)
 
