@@ -2,15 +2,25 @@
 
 ## Monday Aug 18
 - [ ] Review deck v1 → send edits (or edit `deck/build_deck.js` slide text directly)
-- [ ] **Email Mike Tessneer (Board Chair)** — one-line written consent: (a) naming ARC
-      + aggregate campaign metrics in a professional presentation, (b) sharing the
-      sanitized methodology template. Offer to show the three ARC slides.
-- [ ] Create MailerLite form + "EAIO Gift Kit" group (see `capture/lead-capture-runbook.md`)
+- [ ] **5pm weekly call — Mike Tessneer (Board Chair):** verbal OK for (a) naming ARC
+      + aggregate campaign metrics, (b) sharing the sanitized methodology template.
+      Offer to show the three ARC slides. **Then send a one-line recap email and get
+      his reply** — §VI requires *written* consent, so the email converts the verbal
+      yes into the form the contract needs.
+- [ ] **Create TRIAD Synergy free MailerLite account** + API token; connect as a
+      second, separately-named connector. Build the form/group THERE — the EAIO
+      capture list is TRIAD's asset and must never live in ARC's account.
+- [ ] Create MailerLite form + "EAIO Gift Kit" group in the TRIAD account
+      (see `capture/lead-capture-runbook.md`)
 - [ ] Put the form URL into slide 9 + generate the QR
 - [ ] Draft kit-delivery email + the +7day follow-up in MailerLite (drafts, not scheduled)
 
 ## Tuesday Aug 19
 - [ ] Deck v2 freeze (Mike's answer in hand; anonymized variants swap in if needed)
+- [ ] **Board variant of the deck** for Tuesday's ARC board meeting: same ARC-story
+      slides, drop the commercial frame (slides 8–9 replaced with "how your story
+      is being told" + thanks) — transparency gift that also banks goodwill for
+      the consent already given
 - [ ] One-pager copy approved → PDF export
 - [ ] Test the full loop with your own email: form → group → kit email → Targets row
 
