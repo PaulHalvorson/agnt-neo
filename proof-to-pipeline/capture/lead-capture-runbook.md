@@ -3,7 +3,13 @@
 Flow: **MailerLite form → "EAIO Gift Kit" group → kit email → Airtable Targets row →
 scheduler bookings tracked in Touch Log.**
 
-## 0. LIVE ASSETS (created 2026-08-15 in the TRIAD account, acct 2493801)
+## 0. LIVE ASSETS — ⚠️ WRONG ACCOUNT, REBUILD PENDING
+
+The assets below were created 2026-08-15 in acct 2493801 (paulphalvorson@gmail.com)
+— which turned out to be Paul's expired-trial LEARNING account, not TRIAD. The real
+TRIAD account is under drpaul@triadsynergy.com. Once the connector is re-authorized
+to that account: recreate all three assets there, regenerate `../deck/form_qr.png`
+from the new share URL, rebuild both decks. Do NOT use the QR/URLs below.
 
 | Asset | ID / URL |
 |---|---|
