@@ -8,23 +8,10 @@ const NAVY = "1F3A4D", TEAL = "2E6E6E", GOLD = "C08A2E", MIST = "EEF3F4",
 const F = "Calibri", FH = "Cambria";
 
 // --- helpers -------------------------------------------------------------
-function triadKey(s, active) {
-  // small "you are here" triangle key, top-right: I(navy) top, We(teal) left, It(gold) right
-  const cx = 9.28, cy = 0.42, r = 0.09, R = 0.24;
-  const pts = { I: [cx, cy - R], We: [cx - R * 0.87, cy + R * 0.5], It: [cx + R * 0.87, cy + R * 0.5] };
-  const col = { I: NAVY, We: TEAL, It: GOLD };
-  for (const k of ["I", "We", "It"]) {
-    const on = k === active;
-    s.addShape("ellipse", {
-      x: pts[k][0] - (on ? r * 1.5 : r), y: pts[k][1] - (on ? r * 1.5 : r),
-      w: (on ? r * 3 : r * 2), h: (on ? r * 3 : r * 2),
-      fill: { color: col[k], transparency: on ? 0 : 65 }, line: { type: "none" },
-    });
-  }
-  s.addText(active, {
-    x: cx - 0.5, y: cy + R + 0.06, w: 1.0, h: 0.22, align: "center",
-    fontFace: F, fontSize: 9, bold: true, color: col[active], charSpacing: 2,
-  });
+function qKey(s, q, label, color) {
+  // "you are here" question key, top-right: Q1/Q2/Q3 + domain label
+  s.addText(q, { x: 8.45, y: 0.26, w: 1.05, h: 0.44, align: "right", fontFace: FH, fontSize: 24, bold: true, color, margin: 0 });
+  s.addText(label, { x: 7.3, y: 0.7, w: 2.2, h: 0.22, align: "right", fontFace: F, fontSize: 9, bold: true, color: GREY, charSpacing: 2, margin: 0 });
 }
 function title(s, txt, color) {
   s.addText(txt, { x: 0.55, y: 0.32, w: 8.2, h: 0.62, fontFace: FH, fontSize: 30,
@@ -125,43 +112,34 @@ s.addText([
 ], { x: 2.2, y: 4.5, w: 7.1, h: 0.85, fontFace: F, margin: 0, lineSpacingMultiple: 1.15 });
 s.addNotes("Added per Paul's Aug 15 edits. ⚠️ The $400,000 figure needs Mike Tessneer's written consent (due Tue Aug 18) — strike it if consent doesn't cover it. Sunset date shown as Dec 2026 (feedback said Dec 2025; assumed typo — confirm).");
 
-// --- S3 · Method: I·We·It ------------------------------------------------
+// --- S4 · Three questions ------------------------------------------------
 s = p.addSlide();
 s.background = { color: MIST };
-title(s, "The method: I · We · It");
-// triangle diagram left
-const T = { x: 2.05, y: 1.55 }; // top (I)
-circ(s, T.x - 0.42, T.y, 0.84, NAVY);
-circ(s, T.x - 1.42, T.y + 1.75, 0.84, TEAL);
-circ(s, T.x + 0.58, T.y + 1.75, 0.84, GOLD);
-s.addText("I", { x: T.x - 0.42, y: T.y, w: 0.84, h: 0.84, align: "center", valign: "middle", fontFace: FH, fontSize: 26, bold: true, color: WHITE, margin: 0 });
-s.addText("We", { x: T.x - 1.42, y: T.y + 1.75, w: 0.84, h: 0.84, align: "center", valign: "middle", fontFace: FH, fontSize: 22, bold: true, color: WHITE, margin: 0 });
-s.addText("It", { x: T.x + 0.58, y: T.y + 1.75, w: 0.84, h: 0.84, align: "center", valign: "middle", fontFace: FH, fontSize: 22, bold: true, color: WHITE, margin: 0 });
-s.addShape("line", { x: T.x - 0.62, y: T.y + 0.78, w: -0.28, h: 0.92, line: { color: GREY, width: 1.75 } });
-s.addShape("line", { x: T.x + 0.62, y: T.y + 0.78, w: 0.28, h: 0.92, line: { color: GREY, width: 1.75 } });
-s.addShape("line", { x: T.x - 0.52, y: T.y + 2.17, w: 1.04, h: 0, line: { color: GREY, width: 1.75 } });
-const rows = [
-  [NAVY, "I — the leader", "Succession, identity, letting go. Someone has to own the ending."],
-  [TEAL, "We — the community", "Being heard before goodbye. Listening as infrastructure, not sentiment."],
-  [GOLD, "It — the systems", "Data, money, tech. Institutional memory is a systems problem."],
+title(s, "Three questions every ending must answer");
+const qs = [
+  [GOLD, "Q1", "What do we actually have?", "Records, money, tech, data — the institutional memory. Answered by forensic reconstruction."],
+  [TEAL, "Q2", "Who deserves a goodbye?", "The community behind 50 years of relationships. Answered by the Season of Listening."],
+  [NAVY, "Q3", "What lives on?", "The mission, the stories, the assets. Answered by the legacy plan — and a celebration."],
 ];
-rows.forEach((r, i) => {
-  const y = 1.42 + i * 1.08;
-  circ(s, 4.35, y + 0.05, 0.3, r[0]);
+qs.forEach((q, i) => {
+  const y = 1.25 + i * 1.18;
+  s.addShape("roundRect", { x: 0.55, y, w: 8.9, h: 1.0, rectRadius: 0.09, fill: { color: WHITE }, line: { color: "D5DFE1", width: 1 },
+    shadow: { type: "outer", color: "AEB9BD", blur: 6, offset: 2, angle: 90, opacity: 0.25 } });
+  s.addText(q[1], { x: 0.85, y, w: 0.85, h: 1.0, valign: "middle", fontFace: FH, fontSize: 26, bold: true, color: q[0], margin: 0 });
   s.addText([
-    { text: r[1], options: { fontSize: 15.5, bold: true, color: r[0], breakLine: true } },
-    { text: r[2], options: { fontSize: 12.5, color: INK } },
-  ], { x: 4.85, y: y - 0.1, w: 4.6, h: 1.0, fontFace: F, margin: 0, lineSpacingMultiple: 1.08 });
+    { text: q[2], options: { fontSize: 17, bold: true, color: INK, breakLine: true } },
+    { text: q[3], options: { fontSize: 11.5, color: GREY } },
+  ], { x: 1.85, y: y + 0.14, w: 7.4, h: 0.75, fontFace: F, margin: 0, lineSpacingMultiple: 1.12 });
 });
-s.addText("Transitions fail when you optimize one dimension and neglect the other two.",
+s.addText("Transitions fail when you answer one question and skip the other two.",
   { x: 0.55, y: 5.02, w: 8.9, h: 0.4, fontFace: F, fontSize: 13.5, italic: true, color: NAVY, margin: 0 });
-s.addNotes("2:00–3:00. This is the map for the next three slides — watch the key in the corner. The framework is the brand and the brand is the framework.");
+s.addNotes("2:00–3:00. This is the map for the next three slides — watch the Q1/Q2/Q3 key in the corner. Each question gets answered with real artifacts from the ARC engagement.");
 
 // --- S4 · It — forensic reconstruction ----------------------------------
 s = p.addSlide();
 s.background = { color: WHITE };
-title(s, "It — forensic reconstruction", GOLD);
-triadKey(s, "It");
+title(s, "What do we actually have?", GOLD);
+qKey(s, "Q1", "THE SYSTEMS", GOLD);
 const steps = ["Fragments", "Merge + verify", "Dedupe review", "Segment", "Master V5"];
 steps.forEach((t, i) => {
   const x = 0.55 + i * 1.78;
@@ -196,9 +174,9 @@ s.addNotes("3:00–4:30. Mailing-list archaeology: exports, spreadsheets, paper 
 // --- S5 · We — Season of Listening --------------------------------------
 s = p.addSlide();
 s.background = { color: WHITE };
-title(s, "We — the Season of Listening", TEAL);
-triadKey(s, "We");
-s.addText("The We: former retreatants — individuals, churches, organizations — plus volunteers, donors, staff, and board members.",
+title(s, "Who deserves a goodbye?", TEAL);
+qKey(s, "Q2", "THE COMMUNITY", TEAL);
+s.addText("The Season of Listening's answer: former retreatants — individuals, churches, organizations — plus volunteers, donors, staff, and board members.",
   { x: 0.55, y: 0.92, w: 8.0, h: 0.28, fontFace: F, fontSize: 11.5, italic: true, color: TEAL, margin: 0 });
 const big = [["2,436", "campaign launch emails delivered"], ["97.95%", "delivery rate on a rebuilt list"], ["31.5%", "opens — sector average is ~28.6%"]];
 big.forEach((b, i) => {
@@ -283,8 +261,8 @@ s.addNotes("6:00–7:30. Technical meat for this room. Fallback-first design: as
 // --- S7 · I — ending well, forward --------------------------------------
 s = p.addSlide();
 s.background = { color: WHITE };
-title(s, "I — ending well, forward");
-triadKey(s, "I");
+title(s, "What lives on?");
+qKey(s, "Q3", "THE LEGACY", NAVY);
 const arc = [["The ending", "Succession owned. Dissolution run with dignity, on a schedule."],
              ["The legacy", "A dedicated legacy fund distributing the remaining assets to mission-aligned partners — the community's story continues past the org."],
              ["The category", "This is repeatable work: transition · turnaround · succession, for small nonprofits, businesses, and public agencies."]];
@@ -299,7 +277,7 @@ arc.forEach((a, i) => {
 });
 s.addText("Most consultants sell beginnings. Almost nobody owns endings — and every organization has one.",
   { x: 0.55, y: 4.95, w: 8.9, h: 0.45, fontFace: F, fontSize: 14, italic: true, color: GOLD, margin: 0 });
-s.addNotes("7:30–8:30. The I of the triad: leadership through an ending. The fund amount now appears on the mandate slide — remove it there if Mike's written consent (due Tue Aug 18) doesn't cover it; this slide stays general. Land the positioning line.");
+s.addNotes("7:30–8:30. Q3 — leadership through an ending. The fund amount now appears on the mandate slide — remove it there if Mike's written consent (due Tue Aug 18) doesn't cover it; this slide stays general. Land the positioning line.");
 
 // --- S8 · The protocol (reveal) -----------------------------------------
 s = p.addSlide();

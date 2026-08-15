@@ -21,6 +21,7 @@ Cunningham, on his Zoom account (shared with Paul before the session).
 | E3 | ARC sign-off | Paul: covered by agreement. Verification (below) says: get one written line from Board Chair anyway |
 | E4 | The offer | No product pitch. Gift + one line of fractional availability + scheduler link |
 | E5 | Recording | No promo reuse. Capture the transcript; run the Phase-5 retro on it to improve deck + protocol |
+| A1 | Framing (amends #6) | 2026-08-15, Paul: I·We·It felt contrived for this deck → replaced with "Three questions every ending must answer" (Q1 What do we actually have? / Q2 Who deserves a goodbye? / Q3 What lives on?). TRIAD colors retained; I·We·It stays TRIAD's method brand outside this deck |
 
 ## Contract verification (2026-08-15)
 
