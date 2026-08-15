@@ -48,6 +48,11 @@ s.addText([
   { text: "Purpose Driven Action for Business and Community Leaders", options: { fontSize: 11.5, color: "B9C6CE", breakLine: true } },
   { text: "Simple Consulting · Elite AI Operators · August 21, 2026", options: { fontSize: 10.5, color: "8FA3AE" } },
 ], { x: 0.5, y: 4.28, w: 9.0, h: 1.0, align: "center", fontFace: F, lineSpacingMultiple: 1.25 });
+s.addText([
+  { text: "Live engagement — ARC Retreat Community · Stanchfield, MN · 501(c)(3) · arcretreat.org", options: { fontSize: 11, bold: true, color: "B9C6CE", breakLine: true } },
+  { text: "May 1, 2026 → June 30, 2027 (14 months) · Paul ≈10 hrs/wk @ $3,000/mo", options: { fontSize: 10, color: "8FA3AE", breakLine: true } },
+  { text: "+ Amy ≈10 hrs/wk — event facilitation, storytelling audio, written blogs", options: { fontSize: 10, color: "8FA3AE" } },
+], { x: 0.5, y: 3.3, w: 9.0, h: 0.85, align: "center", fontFace: F, lineSpacingMultiple: 1.25 });
 s.addNotes("0:00–0:30. I'm going to show you a real engagement, the agent that runs part of it, and then give you both the method and the agent to take home.");
 
 // --- S2 · The call (forensic open) --------------------------------------
@@ -55,17 +60,17 @@ s = p.addSlide();
 s.background = { color: WHITE };
 title(s, "The call");
 const events = [
-  ["October 2025", "Property sold. Retreat center goes dark."],
-  ["The same season", "Executive Director and staff depart."],
-  ["What's left on paper", "No succession plan. No operating playbook."],
-  ["Who remains", "A five-person board — and no map."],
+  ["June 2025", "Staff laid off."],
+  ["October 2025", "Property sold — 91 acres + buildings — to pay off debt. The retreat center goes dark."],
+  ["December 2025", "Executive Director departs. No succession plan; no handover of records, mailing list, backups, or passwords."],
+  ["Who remains", "A five-person board — worn out by the sale, emotionally beat up."],
 ];
 events.forEach((e, i) => {
   const y = 1.18 + i * 0.98;
   circ(s, 0.62, y + 0.1, 0.2, i === 3 ? GOLD : NAVY);
   s.addText([
     { text: e[0], options: { fontSize: 12, bold: true, color: i === 3 ? GOLD : NAVY, breakLine: true } },
-    { text: e[1], options: { fontSize: 14.5, color: INK } },
+    { text: e[1], options: { fontSize: 12.5, color: INK } },
   ], { x: 1.02, y: y - 0.08, w: 4.4, h: 0.9, fontFace: F, margin: 0, lineSpacingMultiple: 1.05 });
   if (i < 3) s.addShape("line", { x: 0.715, y: y + 0.34, w: 0, h: 0.62, line: { color: "C7D2D8", width: 1.5 } });
 });
@@ -80,6 +85,45 @@ s.addText([
 s.addText("My job: reconstruct the organization's memory — then help it end well, on purpose.",
   { x: 0.62, y: 5.02, w: 8.8, h: 0.4, fontFace: F, fontSize: 13.5, italic: true, color: GREY, margin: 0 });
 s.addNotes("0:30–2:00. The 60-second self-contained story. Founded 1977, inter-spiritual retreat community. Property sale closes a chapter; nobody owns the ending. This is a FORENSIC engagement: start from nothing, rebuild the record, then run the goodbye with intention.");
+
+// --- S2b · Who remains — and the mandate --------------------------------
+s = p.addSlide();
+s.background = { color: WHITE };
+title(s, "Who remains — and the mandate");
+s.addText("THE TEAM NOW", { x: 0.55, y: 1.06, w: 3.9, h: 0.28, fontFace: F, fontSize: 11, bold: true, color: GREY, charSpacing: 2, margin: 0 });
+const team = [
+  [NAVY, "Board chair", "Leading the charge — brought in two part-time contractors."],
+  [TEAL, "Paul · TRIAD Synergy", "Records, systems, data, daily dashboards — and the sunset plan."],
+  [GOLD, "Amy", "Organizes and facilitates the listening sessions; turns the stories into oral and written histories published on the website."],
+];
+team.forEach((t, i) => {
+  const y = 1.44 + i * 0.98;
+  circ(s, 0.62, y + 0.06, 0.18, t[0]);
+  s.addText([
+    { text: t[1], options: { fontSize: 13, bold: true, color: t[0] === GOLD ? "9A6E25" : t[0], breakLine: true } },
+    { text: t[2], options: { fontSize: 10.5, color: INK } },
+  ], { x: 0.98, y: y - 0.08, w: 3.55, h: 0.95, fontFace: F, margin: 0, lineSpacingMultiple: 1.05 });
+});
+s.addText("THE MANDATE", { x: 4.95, y: 1.06, w: 4.5, h: 0.28, fontFace: F, fontSize: 11, bold: true, color: GREY, charSpacing: 2, margin: 0 });
+const mandate = [
+  "Identify a new fiscal agent and legally sunset the 501(c)(3) — by December 2026.",
+  "With the founder and three designated Stewards, decide how $400,000 is distributed to pay ARC's mission forward.",
+  "A celebration event, June 2027 — the final act.",
+];
+mandate.forEach((m, i) => {
+  const y = 1.44 + i * 0.98;
+  s.addShape("roundRect", { x: 4.95, y: y - 0.05, w: 4.5, h: 0.88, rectRadius: 0.07, fill: { color: MIST }, line: { type: "none" } });
+  s.addText(String(i + 1), { x: 5.08, y: y - 0.05, w: 0.5, h: 0.88, align: "center", valign: "middle", fontFace: FH, fontSize: 20, bold: true, color: GOLD, margin: 0 });
+  s.addText(m, { x: 5.62, y: y - 0.05, w: 3.7, h: 0.88, valign: "middle", fontFace: F, fontSize: 11, color: INK, margin: 0, lineSpacingMultiple: 1.05 });
+});
+s.addShape("roundRect", { x: 0.55, y: 4.42, w: 8.9, h: 1.0, rectRadius: 0.09, fill: { color: NAVY }, line: { type: "none" } });
+s.addText("DELIVERABLES", { x: 0.75, y: 4.42, w: 1.35, h: 1.0, valign: "middle", fontFace: F, fontSize: 11, bold: true, color: GOLD, charSpacing: 2, margin: 0 });
+s.addText([
+  { text: "1  Daily dashboard to Paul, Amy, and the board chair through August.", options: { fontSize: 10.5, color: WHITE, breakLine: true } },
+  { text: "2  Findings + recommendations from the listening sessions and community survey.", options: { fontSize: 10.5, color: WHITE, breakLine: true } },
+  { text: "3  60-day legal sunset & dissolution plan — cash assets to a fiscal agent, managed by the 3-person stewardship group with the founder.", options: { fontSize: 10.5, color: WHITE } },
+], { x: 2.2, y: 4.5, w: 7.1, h: 0.85, fontFace: F, margin: 0, lineSpacingMultiple: 1.15 });
+s.addNotes("Added per Paul's Aug 15 edits. ⚠️ The $400,000 figure needs Mike Tessneer's written consent (due Tue Aug 18) — strike it if consent doesn't cover it. Sunset date shown as Dec 2026 (feedback said Dec 2025; assumed typo — confirm).");
 
 // --- S3 · Method: I·We·It ------------------------------------------------
 s = p.addSlide();
@@ -141,8 +185,9 @@ stats.forEach((st, i) => {
   ], { x: x + 0.2, y: 2.5, w: 2.45, h: 1.45, fontFace: F, margin: 0, lineSpacingMultiple: 1.1 });
 });
 s.addText([
-  { text: "Plus the operating layer nobody had: ", options: { fontSize: 13.5, color: INK } },
-  { text: "new tech stack, new website, email infrastructure, donation rails.", options: { fontSize: 13.5, bold: true, color: NAVY } },
+  { text: "Plus the operating layer nobody had — ", options: { fontSize: 12.5, color: INK } },
+  { text: "Google Workspace · MailerLite · Claude Max · Stripe · Squarespace", options: { fontSize: 12.5, bold: true, color: NAVY } },
+  { text: " — website, email, donation rails. Donations are still being received.", options: { fontSize: 12.5, color: INK } },
 ], { x: 0.55, y: 4.35, w: 8.9, h: 0.4, fontFace: F, margin: 0 });
 s.addText("Institutional memory is a data problem before it is a story problem.",
   { x: 0.55, y: 5.02, w: 8.9, h: 0.4, fontFace: F, fontSize: 13.5, italic: true, color: GREY, margin: 0 });
@@ -153,6 +198,8 @@ s = p.addSlide();
 s.background = { color: WHITE };
 title(s, "We — the Season of Listening", TEAL);
 triadKey(s, "We");
+s.addText("The We: former retreatants — individuals, churches, organizations — plus volunteers, donors, staff, and board members.",
+  { x: 0.55, y: 0.92, w: 8.0, h: 0.28, fontFace: F, fontSize: 11.5, italic: true, color: TEAL, margin: 0 });
 const big = [["2,436", "campaign launch emails delivered"], ["97.95%", "delivery rate on a rebuilt list"], ["31.5%", "opens — sector average is ~28.6%"]];
 big.forEach((b, i) => {
   const x = 0.55 + i * 1.92;
@@ -252,7 +299,7 @@ arc.forEach((a, i) => {
 });
 s.addText("Most consultants sell beginnings. Almost nobody owns endings — and every organization has one.",
   { x: 0.55, y: 4.95, w: 8.9, h: 0.45, fontFace: F, fontSize: 14, italic: true, color: GOLD, margin: 0 });
-s.addNotes("7:30–8:30. The I of the triad: leadership through an ending. Name the fund amount verbally ONLY if Board Chair consent covers it; the slide stays general. Land the positioning line.");
+s.addNotes("7:30–8:30. The I of the triad: leadership through an ending. The fund amount now appears on the mandate slide — remove it there if Mike's written consent (due Tue Aug 18) doesn't cover it; this slide stays general. Land the positioning line.");
 
 // --- S8 · The protocol (reveal) -----------------------------------------
 s = p.addSlide();
