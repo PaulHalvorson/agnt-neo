@@ -11,6 +11,14 @@ TRIAD account is under drpaul@triadsynergy.com. Once the connector is re-authori
 to that account: recreate all three assets there, regenerate `../deck/form_qr.png`
 from the new share URL, rebuild both decks. Do NOT use the QR/URLs below.
 
+**Auth re-check 2026-08-15 (session 3): still blocked.** The "MailerLite —
+TRIAD Synergy" connector still answers as paulphalvorson@gmail.com / acct 2493801
+(trial), and the plain "MailerLite" connector is ARC (contact@arclegacyfund.org).
+No create calls were made. Paul must re-authorize the TRIAD connector in claude.ai
+while logged into MailerLite as drpaul@triadsynergy.com (log out of the gmail
+account in the browser first — the OAuth screen reuses the live browser session,
+which is how the wrong-account build happened). Then re-run this §0 rebuild.
+
 | Asset | ID / URL |
 |---|---|
 | Group `EAIO Gift Kit — 2026-08-21` | `195866738980554546` |
