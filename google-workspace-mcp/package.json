@@ -1,0 +1,21 @@
+{
+  "name": "google-workspace-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local MCP server exposing Google Drive across multiple Google Workspace accounts (Triad Synergy, ARC Legacy Fund, ARC Retreat) with per-request workspace switching.",
+  "bin": {
+    "google-workspace-mcp": "src/server.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "authorize": "node bin/authorize.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.0",
+    "googleapis": "^140.0.0"
+  }
+}

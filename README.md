@@ -1,5 +1,13 @@
 # agnt-neo
 
+## google-workspace-mcp — multi-Workspace Google Drive connector
+
+[`google-workspace-mcp/`](./google-workspace-mcp/) is a local MCP server that lets
+Claude reach the Google Drive of any of three Google Workspaces on demand
+(Triad Synergy, ARC Legacy Fund, ARC Retreat) with a per-request `workspace`
+selector. See [`google-workspace-mcp/README.md`](./google-workspace-mcp/README.md)
+for setup.
+
 ## Haley Fox — Missouri location reference
 
 [`haley-fox-location-map.html`](./haley-fox-location-map.html) is a self-contained,

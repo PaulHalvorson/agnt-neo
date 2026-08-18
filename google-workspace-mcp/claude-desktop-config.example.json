@@ -1,0 +1,12 @@
+{
+  "//": "Merge the 'google-workspace' entry into the 'mcpServers' object of your Claude Desktop config. On Windows: %APPDATA%\\Claude\\claude_desktop_config.json. Use the FULL path to server.js and escape backslashes on Windows (\\\\).",
+  "mcpServers": {
+    "google-workspace": {
+      "command": "node",
+      "args": ["C:\\\\path\\\\to\\\\agnt-neo\\\\google-workspace-mcp\\\\src\\\\server.js"],
+      "env": {
+        "GWS_MCP_CONFIG": "C:\\\\Users\\\\YOU\\\\AppData\\\\Roaming\\\\google-workspace-mcp\\\\config.json"
+      }
+    }
+  }
+}
